@@ -137,8 +137,9 @@ export class Connection {
       this.pongReceived = false
 
       try {
-        this.webSocket.send('PING')
-        console.log('sent ping string')
+        this.webSocket.ping() // the ping frame is needed by the server to recognize if client is still there
+        this.webSocket.send('PING') // the ping message is needed by the client to recognize if it's still connected (the client doesnt see the ping frame)
+        console.log('sent ping frame')
 
       } catch (error) {
         console.log(`closing connection in catch: ${error}`)

@@ -307,26 +307,30 @@ export class HocuspocusProvider extends EventEmitter {
       clearInterval(this.heartbeatInterval)
     }
 
+    console.log(this.webSocket)
+
     this.heartbeatInterval = setInterval(() => {
       this.missedHeartbeats += 1
       console.log('triggering terminate')
+      console.log(this.webSocket)
 
-      if (this.missedHeartbeats < 3) {
-        console.log(`Missed heartbeat ${this.missedHeartbeats} of 3, not terminating the connection yet`)
-        return
-      }
+      // if (this.missedHeartbeats < 3) {
+      //   console.log(`Missed heartbeat ${this.missedHeartbeats} of 3, not terminating the connection yet`)
+      //   return
+      // }
 
       if (this.webSocket !== null) {
-        this.webSocket.close(1000, 'heartbeat missing ; probably offline!')
+        this.webSocket.close(3000, 'heartbeat missing ; probably offline!')
+        this.webSocket = null
         this.missedHeartbeats = 0
 
-        if (undefined !== this.heartbeatInterval) {
-          clearInterval(this.heartbeatInterval)
-        }
+        // if (undefined !== this.heartbeatInterval) {
+        //   clearInterval(this.heartbeatInterval)
+        // }
 
       }
 
-    }, 3000)
+    }, 1000 * (5 + 3))
   }
 
   createWebSocketConnection() {
@@ -336,9 +340,11 @@ export class HocuspocusProvider extends EventEmitter {
       ws.binaryType = 'arraybuffer'
       ws.onmessage = this.onMessage.bind(this)
       ws.onclose = this.onClose.bind(this)
-      ws.onping = this.heartbeat.bind(this)
+      // ws.onping = this.heartbeat.bind(this) // this doesnt fire when server sends ping frame
+      // ws.onpong = this.heartbeat.bind(this) // this doesnt fire when server sends ping frame
       ws.onopen = this.onOpen.bind(this)
-      ws.onerror = () => {
+      ws.onerror = (e: any) => {
+        console.log(e)
         reject()
       }
       this.webSocket = ws
@@ -400,8 +406,9 @@ export class HocuspocusProvider extends EventEmitter {
 
     // No message received in a long time, not even your own
     // Awareness updates, which are updated every 15 seconds.
-    console.log('closing connection as no updates were received at all')
-    this.webSocket?.close()
+    // console.log('closing connection in checkConnection()')
+    // this.webSocket?.close(1000, 'conn lost')
+    console.log('would close')
   }
 
   forceSync() {
@@ -492,6 +499,8 @@ export class HocuspocusProvider extends EventEmitter {
   }
 
   disconnect() {
+    console.log('called disconnect')
+
     this.shouldConnect = false
     this.disconnectBroadcastChannel()
 
@@ -501,8 +510,8 @@ export class HocuspocusProvider extends EventEmitter {
 
     try {
       this.webSocket.close()
-    } catch {
-      //
+    } catch (e) {
+      console.log(`Error during disconnect: ${e}`)
     }
   }
 
@@ -572,8 +581,10 @@ export class HocuspocusProvider extends EventEmitter {
   }
 
   onClose(event: CloseEvent) {
-    if (this.heartbeatTimeout) {
-      clearTimeout(this.heartbeatTimeout)
+    console.log('triggering onClose')
+
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval)
     }
 
     this.emit('close', { event })
