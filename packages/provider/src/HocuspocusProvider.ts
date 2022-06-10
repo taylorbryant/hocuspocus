@@ -294,6 +294,41 @@ export class HocuspocusProvider extends EventEmitter {
     }
   }
 
+  heartbeatInterval?: NodeJS.Timeout
+
+  missedHeartbeats = 0
+
+  heartbeat() {
+    console.log('got heartbeat')
+    this.missedHeartbeats = 0
+
+    if (undefined !== this.heartbeatInterval) {
+      console.log('timeout wasnt empty')
+      clearInterval(this.heartbeatInterval)
+    }
+
+    this.heartbeatInterval = setInterval(() => {
+      this.missedHeartbeats += 1
+      console.log('triggering terminate')
+
+      if (this.missedHeartbeats < 3) {
+        console.log(`Missed heartbeat ${this.missedHeartbeats} of 3, not terminating the connection yet`)
+        return
+      }
+
+      if (this.webSocket !== null) {
+        this.webSocket.close(1000, 'heartbeat missing ; probably offline!')
+        this.missedHeartbeats = 0
+
+        if (undefined !== this.heartbeatInterval) {
+          clearInterval(this.heartbeatInterval)
+        }
+
+      }
+
+    }, 3000)
+  }
+
   createWebSocketConnection() {
     return new Promise((resolve, reject) => {
       // Init the WebSocket connection
@@ -301,6 +336,7 @@ export class HocuspocusProvider extends EventEmitter {
       ws.binaryType = 'arraybuffer'
       ws.onmessage = this.onMessage.bind(this)
       ws.onclose = this.onClose.bind(this)
+      ws.onping = this.heartbeat.bind(this)
       ws.onopen = this.onOpen.bind(this)
       ws.onerror = () => {
         reject()
@@ -364,6 +400,7 @@ export class HocuspocusProvider extends EventEmitter {
 
     // No message received in a long time, not even your own
     // Awareness updates, which are updated every 15 seconds.
+    console.log('closing connection as no updates were received at all')
     this.webSocket?.close()
   }
 
@@ -391,9 +428,10 @@ export class HocuspocusProvider extends EventEmitter {
   }
 
   documentUpdateHandler(update: Uint8Array, origin: any) {
-    if (origin === this) {
+    if (origin === this) { // if the document update was triggered by me (e.g. by applying a state update from the remote), don't send that update again
       return
     }
+    // save that a document update happened and that we have to sent it out ; how to we know if the update arrived on the server side?
 
     this.send(UpdateMessage, { update }, true)
   }
@@ -471,6 +509,8 @@ export class HocuspocusProvider extends EventEmitter {
   async onOpen(event: Event) {
     this.emit('open', { event })
 
+    this.heartbeat()
+
     if (this.isAuthenticationRequired) {
       this.send(AuthenticationMessage, {
         token: await this.getToken(),
@@ -515,6 +555,11 @@ export class HocuspocusProvider extends EventEmitter {
   }
 
   onMessage(event: MessageEvent) {
+    if (event.data === 'PING') {
+      this.heartbeat()
+      return
+    }
+
     this.resolveConnectionAttempt()
 
     this.lastMessageReceived = time.getUnixTime()
@@ -527,6 +572,10 @@ export class HocuspocusProvider extends EventEmitter {
   }
 
   onClose(event: CloseEvent) {
+    if (this.heartbeatTimeout) {
+      clearTimeout(this.heartbeatTimeout)
+    }
+
     this.emit('close', { event })
 
     this.webSocket = null

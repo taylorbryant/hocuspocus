@@ -129,6 +129,7 @@ export class Connection {
    */
   private check(): void {
     if (!this.pongReceived) {
+      console.log('closing connection!')
       return this.close(ConnectionTimeout)
     }
 
@@ -136,8 +137,11 @@ export class Connection {
       this.pongReceived = false
 
       try {
-        this.webSocket.ping()
+        this.webSocket.send('PING')
+        console.log('sent ping string')
+
       } catch (error) {
+        console.log(`closing connection in catch: ${error}`)
         this.close(ConnectionTimeout)
       }
     }
