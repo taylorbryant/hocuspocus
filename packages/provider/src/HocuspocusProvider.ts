@@ -440,6 +440,7 @@ export class HocuspocusProvider extends EventEmitter {
     }
     // save that a document update happened and that we have to sent it out ; how to we know if the update arrived on the server side?
 
+    this.synced = false
     this.send(UpdateMessage, { update }, true)
   }
 
