@@ -4,7 +4,7 @@ import * as time from 'lib0/time'
 import { Awareness, removeAwarenessStates } from 'y-protocols/awareness'
 import * as mutex from 'lib0/mutex'
 import * as url from 'lib0/url'
-import type { Event, CloseEvent, MessageEvent } from 'ws'
+import type { CloseEvent, Event, MessageEvent } from 'ws'
 import { retry } from '@lifeomic/attempt'
 import {
   awarenessStatesToArray, Forbidden, Unauthorized, WsReadyStates,
@@ -20,7 +20,16 @@ import { AuthenticationMessage } from './OutgoingMessages/AuthenticationMessage'
 import { AwarenessMessage } from './OutgoingMessages/AwarenessMessage'
 import { UpdateMessage } from './OutgoingMessages/UpdateMessage'
 import {
-  ConstructableOutgoingMessage, onAuthenticationFailedParameters, onCloseParameters, onDisconnectParameters, onMessageParameters, onOpenParameters, onOutgoingMessageParameters, onStatusParameters, onSyncedParameters, WebSocketStatus,
+  ConstructableOutgoingMessage,
+  onAuthenticationFailedParameters,
+  onCloseParameters,
+  onDisconnectParameters,
+  onMessageParameters,
+  onOpenParameters,
+  onOutgoingMessageParameters,
+  onStatusParameters,
+  onSyncedParameters,
+  WebSocketStatus,
 } from './types'
 import { onAwarenessChangeParameters, onAwarenessUpdateParameters } from '.'
 
@@ -371,7 +380,7 @@ export class HocuspocusProvider extends EventEmitter {
 
     // No message received in a long time, not even your own
     // Awareness updates, which are updated every 15 seconds.
-    this.webSocket?.close()
+    this.disconnect(true)
   }
 
   forceSync() {
@@ -461,7 +470,7 @@ export class HocuspocusProvider extends EventEmitter {
     return !!this.configuration.token && !this.isAuthenticated
   }
 
-  disconnect() {
+  disconnect(immediate = false) {
     this.shouldConnect = false
     this.disconnectBroadcastChannel()
 
@@ -471,6 +480,16 @@ export class HocuspocusProvider extends EventEmitter {
 
     try {
       this.webSocket.close()
+
+      if (immediate) {
+        this.webSocket = null
+
+        this.status = WebSocketStatus.Disconnected
+        this.isSynced = false
+        this.isAuthenticated = false
+
+        this.emit('status', { status: WebSocketStatus.Disconnected })
+      }
     } catch {
       //
     }
