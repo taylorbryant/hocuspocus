@@ -156,7 +156,7 @@ export class Redis implements Extension {
       .createSyncMessage()
       .writeFirstSyncStepFor(document)
 
-    return this.pub.publishBuffer(this.pubKey(documentName), Buffer.from(syncMessage.toUint8Array()))
+    return this.pub.publish(this.pubKey(documentName), Buffer.from(syncMessage.toUint8Array()))
   }
 
   /**
@@ -166,7 +166,7 @@ export class Redis implements Extension {
     const awarenessMessage = new OutgoingMessage()
       .writeQueryAwareness()
 
-    return this.pub.publishBuffer(
+    return this.pub.publish(
       this.pubKey(documentName),
       Buffer.from(awarenessMessage.toUint8Array()),
     )
@@ -219,7 +219,7 @@ export class Redis implements Extension {
     const message = new OutgoingMessage()
       .createAwarenessUpdateMessage(awareness, changedClients)
 
-    return this.pub.publishBuffer(
+    return this.pub.publish(
       this.pubKey(documentName),
       Buffer.from(message.toUint8Array()),
     )
@@ -247,7 +247,7 @@ export class Redis implements Extension {
       new IncomingMessage(data),
       this.logger,
     ).apply(document, undefined, reply => {
-      return this.pub.publishBuffer(
+      return this.pub.publish(
         this.pubKey(document.name),
         Buffer.from(reply),
       )
