@@ -1,5 +1,5 @@
-import RedisClient from 'ioredis'
-import Redlock from 'redlock'
+import RedisClient, { type Redis as RedisType, RedisOptions } from 'ioredis'
+import Redlock, { CompatibleRedisClient, Lock } from 'redlock'
 import { v4 as uuid } from 'uuid'
 import {
   IncomingMessage,
@@ -33,7 +33,7 @@ export interface Configuration {
    *
    * https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options
    */
-  options?: RedisClient.RedisOptions,
+  options?: RedisOptions,
   /**
    * An unique instance name, required to filter messages in Redis.
    * If none is provided an unique id is generated.
@@ -65,15 +65,15 @@ export class Redis implements Extension {
     lockTimeout: 1000,
   }
 
-  pub: RedisClient.Redis
+  pub: RedisType
 
-  sub: RedisClient.Redis
+  sub: RedisType
 
   documents: Map<string, Document> = new Map()
 
   redlock: Redlock
 
-  locks = new Map<string, Redlock.Lock>()
+  locks = new Map<string, Lock>()
 
   logger: Debugger
 
@@ -83,14 +83,14 @@ export class Redis implements Extension {
       ...configuration,
     }
 
-    const { port, host, options } = this.configuration
+    const { port, host, options = {} } = this.configuration
 
     this.pub = new RedisClient(port, host, options)
 
     this.sub = new RedisClient(port, host, options)
     this.sub.on('pmessageBuffer', this.handleIncomingMessage)
 
-    this.redlock = new Redlock([this.pub])
+    this.redlock = new Redlock([this.pub as unknown as CompatibleRedisClient])
 
     // We’ll replace that in the onConfigure hook with the global instance.
     this.logger = new Debugger()
