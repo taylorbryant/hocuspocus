@@ -94,8 +94,6 @@
   items:
     - title: Introduction
       link: /provider/introduction
-    - title: Installation
-      link: /provider/installation
     - title: Configuration
       link: /provider/configuration
     - title: Events
