@@ -6,19 +6,7 @@ tableOfContents: true
 
 ## Official extensions
 
-We already created some very useful extensions you should check out for sure:
-
-**[@hocuspocus/extension-database](/api/extensions/database)**: A generic database driver that is easily adjustable to work with any database.
-
-**[@hocuspocus/extension-monitor](/api/extensions/monitor)**: A beautiful dashboard to monitor and debug your Hocuspocus instance.
-
-**[@hocuspocus/extension-redis](/api/extensions/redis)**: Scale Hocuspocus horizontally with Redis.
-
-**[@hocuspocus/extension-logger](/api/extensions/logger)**: Add logging to Hocuspocus.
-
-**[@hocuspocus/extension-webhook](/api/extensions/webhook)**: Send document changes via webhook to your API.
-
-**[@hocuspocus/extension-throttle](/api/extensions/throttle)**: Throttle connections by ips.
+You can see the extensions we have already created [here](/server/extensions).
 
 ## Create your own extension
 
