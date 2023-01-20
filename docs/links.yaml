@@ -10,23 +10,6 @@
     - title: Contributing
       link: /overview/contributing
 
-- title: Use cases
-  items:
-    # - title: Tasks
-    #   link: /examples/tasks
-    #   type: draft
-    - title: Tiptap
-      link: /examples/tiptap
-    - title: Quill
-      link: /examples/quill
-    - title: Monaco
-      link: /examples/monaco
-    - title: CodeMirror 5
-      link: /examples/codemirror
-    - title: Slate
-      link: /examples/slate
-      type: draft
-
 - title: Guides
   items:
     - title: Configuration
@@ -117,6 +100,8 @@
       link: /provider/configuration
     - title: Events
       link: /provider/events
+    - title: Examples
+      link: /provider/examples
 
 # - title: Knowledge
 #   items:
