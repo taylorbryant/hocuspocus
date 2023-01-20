@@ -38,24 +38,8 @@
       link: /server/hooks
     - title: Examples
       link: /server/examples
-
     - title: Extensions
-      link: /api/extensions
-      items:
-        - title: Database
-          link: /api/extensions/database
-        - title: Logger
-          link: /api/extensions/logger
-        - title: Monitor
-          link: /api/extensions/monitor
-        - title: Redis
-          link: /api/extensions/redis
-        - title: SQLite
-          link: /api/extensions/sqlite
-        - title: Throttle
-          link: /api/extensions/throttle
-        - title: Webhook
-          link: /api/extensions/webhook
+      link: /server/extensions
 
 - title: Provider
   items:
