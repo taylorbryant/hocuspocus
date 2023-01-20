@@ -4,22 +4,11 @@
       link: /overview/Introduction
     - title: Getting Started
       link: /overview/getting-started
-      items:
-        - title: CLI
-          link: /installation/cli
-        - title: Express
-          link: /installation/express
-        - title: Koa
-          link: /installation/koa
-          type: draft
-        - title: Laravel
-          link: /installation/laravel
-          type: draft
     - title: About the project
-      link: /sponsor
+      link: /overview/sponsor
       type: sponsor
     - title: Contributing
-      link: /contributing
+      link: /overview/contributing
 
 - title: Use cases
   items:
@@ -97,6 +86,8 @@
           link: /api/hooks/on-disconnect
         - title: onDestroy
           link: /api/hooks/on-destroy
+    - title: Examples
+      link: /server/examples
 
     - title: Extensions
       link: /api/extensions
