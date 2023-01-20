@@ -224,6 +224,7 @@ const server = Server.configure({
   },
 }).listen();
 ```
+
 ### onAwarenessUpdate
 
 The `onAwarenessUpdate` hook is called when awareness changed ([Provider Awareness API](/provider/awareness)).
@@ -260,13 +261,13 @@ const data = {
 
 ```js
 const provider = new HocuspocusProvider({
-  url: 'ws://127.0.0.1:1234',
-  name: 'example-document',
+  url: "ws://127.0.0.1:1234",
+  name: "example-document",
   document: ydoc,
   onAwarenessUpdate: ({ states }) => {
-    currentStates = states
+    currentStates = states;
   },
-})
+});
 ```
 
 ### onChange
@@ -283,9 +284,9 @@ It's highly recommended to debounce extensive operations as this hook can be fir
 The `data` passed to the `onChange` hook has the following attributes:
 
 ```js
-import { IncomingHttpHeaders } from 'http'
-import { URLSearchParams } from 'url'
-import { Doc } from 'yjs'
+import { IncomingHttpHeaders } from "http";
+import { URLSearchParams } from "url";
+import { Doc } from "yjs";
 
 const data = {
   clientsCount: number,
@@ -297,7 +298,7 @@ const data = {
   requestParameters: URLSearchParams,
   update: Uint8Array,
   socketId: string,
-}
+};
 ```
 
 Context contains the data provided in former `onConnect` hooks.
@@ -309,12 +310,12 @@ The following example is not intended to be your primary storage as serializing 
 :::
 
 ```js
-import { debounce } from 'debounce'
-import { Server } from '@hocuspocus/server'
-import { TiptapTransformer } from '@hocuspocus/transformer'
-import { writeFile } from 'fs'
+import { debounce } from "debounce";
+import { Server } from "@hocuspocus/server";
+import { TiptapTransformer } from "@hocuspocus/transformer";
+import { writeFile } from "fs";
 
-let debounced
+let debounced;
 
 const server = Server.configure({
   async onChange(data) {
@@ -322,31 +323,30 @@ const server = Server.configure({
       // Convert the y-doc to something you can actually use in your views.
       // In this example we use the TiptapTransformer to get JSON from the given
       // ydoc.
-      const prosemirrorJSON = TiptapTransformer.fromYdoc(data.document)
+      const prosemirrorJSON = TiptapTransformer.fromYdoc(data.document);
 
       // Save your document. In a real-world app this could be a database query
       // a webhook or something else
-      writeFile(
-        `/path/to/your/documents/${data.documentName}.json`,
-        prosemirrorJSON
-      )
+      writeFile(`/path/to/your/documents/${data.documentName}.json`, prosemirrorJSON);
 
       // Maybe you want to store the user who changed the document?
       // Guess what, you have access to your custom context from the
       // onConnect hook here. See authorization & authentication for more
       // details
-      console.log(`Document ${data.documentName} changed by ${data.context.user.name}`)
-    }
+      console.log(`Document ${data.documentName} changed by ${data.context.user.name}`);
+    };
 
-    debounced?.clear()
-    debounced = debounce(save, 4000)
-    debounced()
+    debounced?.clear();
+    debounced = debounce(save, 4000);
+    debounced();
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
+
 ### onConfigure
+
 The `onConfigure` hook is called after the server was configured using the [configure](/api/methods) method. It should return a Promise.
 
 **Default configuration**
@@ -354,7 +354,7 @@ The `onConfigure` hook is called after the server was configured using the [conf
 If `configure()` is never called, you can get the default configuration by importing it:
 
 ```js
-import { defaultConfiguration } from '@hocuspocus/server'
+import { defaultConfiguration } from "@hocuspocus/server";
 ```
 
 **Hook payload**
@@ -362,29 +362,30 @@ import { defaultConfiguration } from '@hocuspocus/server'
 The `data` passed to the `onConfigure` hook has the following attributes:
 
 ```js
-import { Configuration } from '@hocuspocus/server'
+import { Configuration } from "@hocuspocus/server";
 
 const data = {
   configuration: Configuration,
   version: string,
   instance: Hocuspocus,
-}
+};
 ```
 
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
+import { Server } from "@hocuspocus/server";
 
 const server = Server.configure({
   async onConfigure(data) {
     // Output some information
-    console.log(`Server was configured!`)
+    console.log(`Server was configured!`);
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
+
 ### onConnect
 
 The `onConnect` hook will be called when a new connection is established. It should return a Promise. Throwing an exception or rejecting the Promise will terminate the connection.
@@ -394,9 +395,9 @@ The `onConnect` hook will be called when a new connection is established. It sho
 The `data` passed to the `onConnect` hook has the following attributes:
 
 ```js
-import { IncomingHttpHeaders } from 'http'
-import { URLSearchParams } from 'url'
-import { Doc } from 'yjs'
+import { IncomingHttpHeaders } from "http";
+import { URLSearchParams } from "url";
+import { Doc } from "yjs";
 
 const data = {
   documentName: string,
@@ -408,25 +409,26 @@ const data = {
   connection: {
     readOnly: boolean,
   },
-}
+};
 ```
 
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
+import { Server } from "@hocuspocus/server";
 
 const server = Server.configure({
   async onConnect(data) {
     // Output some information
-    console.log(`New websocket connection`)
+    console.log(`New websocket connection`);
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
 
 ### onDestroy
+
 The `onDestroy` hook is called after the server was shut down using the [destroy](/api/methods) method. It should return a Promise.
 
 **Hook payload**
@@ -435,24 +437,25 @@ The `data` passed to the `onDestroy` hook has the following attributes:
 
 ```js
 const data = {
-  instance: Hocuspocus
-}
+  instance: Hocuspocus,
+};
 ```
 
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
+import { Server } from "@hocuspocus/server";
 
 const server = Server.configure({
   async onDestroy(data) {
     // Output some information
-    console.log(`Server was shut down!`)
-  }
-})
+    console.log(`Server was shut down!`);
+  },
+});
 
-server.listen()
+server.listen();
 ```
+
 ### onDisconnect
 
 The `onDisconnect` hook is called when a connection is terminated. It should return a Promise.
@@ -462,9 +465,9 @@ The `onDisconnect` hook is called when a connection is terminated. It should ret
 The `data` passed to the `onDisconnect` hook has the following attributes:
 
 ```js
-import { IncomingHttpHeaders } from 'http'
-import { URLSearchParams } from 'url'
-import { Doc } from 'yjs'
+import { IncomingHttpHeaders } from "http";
+import { URLSearchParams } from "url";
+import { Doc } from "yjs";
 
 const data = {
   clientsCount: number,
@@ -474,8 +477,8 @@ const data = {
   instance: Hocuspocus,
   requestHeaders: IncomingHttpHeaders,
   requestParameters: URLSearchParams,
-  socketId: string
-}
+  socketId: string,
+};
 ```
 
 Context contains the data provided in former `onConnect` hooks.
@@ -483,16 +486,16 @@ Context contains the data provided in former `onConnect` hooks.
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
+import { Server } from "@hocuspocus/server";
 
 const server = Server.configure({
   async onDisconnect(data) {
     // Output some information
-    console.log(`"${data.context.user.name}" has disconnected.`)
+    console.log(`"${data.context.user.name}" has disconnected.`);
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
 
 ### onListen
@@ -506,22 +509,22 @@ The `data` passed to the `onListen` hook has the following attributes:
 ```js
 const data = {
   port: number,
-}
+};
 ```
 
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
+import { Server } from "@hocuspocus/server";
 
 const server = Server.configure({
   async onListen(data) {
     // Output some information
-    console.log(`Server is listening on port "${data.port}"!`)
+    console.log(`Server is listening on port "${data.port}"!`);
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
 
 ### onLoadDocument
@@ -537,20 +540,20 @@ You can create a Y.js document from your existing data, for example JSON. You sh
 To do that, you can use the Transformer package. For Tiptap-compatible JSON it would look like that:
 
 ```js
-import { Server } from '@hocuspocus/server'
-import { TiptapTransformer } from '@hocuspocus/transformer'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
+import { Server } from "@hocuspocus/server";
+import { TiptapTransformer } from "@hocuspocus/transformer";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
 
 const ydoc = TiptapTransformer.toYdoc(
   // the actual JSON
   json,
   // the `field` you’re using in Tiptap. If you don’t know what that is, use 'default'.
-  'default',
+  "default",
   // The Tiptap extensions you’re using. Those are important to create a valid schema.
-  [Document, Paragraph, Text],
-)
+  [Document, Paragraph, Text]
+);
 ```
 
 However, we expect you to return a Y.js document from the `onLoadDocument` hook, no matter where it’s from.
@@ -581,7 +584,7 @@ If you just want to to get it working, have a look at the [`SQLite`](/api/extens
 The `data` passed to the `onLoadDocument` hook has the following attributes:
 
 ```js
-import { Doc } from 'yjs'
+import { Doc } from "yjs";
 
 const data = {
   context: any,
@@ -590,8 +593,8 @@ const data = {
   instance: Hocuspocus,
   requestHeaders: IncomingHttpHeaders,
   requestParameters: URLSearchParams,
-  socketId: string
-}
+  socketId: string,
+};
 ```
 
 Context contains the data provided in former `onConnect` hooks.
@@ -607,43 +610,42 @@ This is useful if you want to create custom routes on the same port Hocuspocus r
 The `data` passed to the `onRequest` hook has the following attributes:
 
 ```js
-import { IncomingMessage, ServerResponse } from 'http'
+import { IncomingMessage, ServerResponse } from "http";
 
 const data = {
   request: IncomingMessage,
   response: ServerResponse,
   instance: Hocuspocus,
-}
+};
 ```
 
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
+import { Server } from "@hocuspocus/server";
 
 const server = Server.configure({
   onRequest(data) {
     return new Promise((resolve, reject) => {
-      const { request, response } = data
+      const { request, response } = data;
 
       // Check if the request hits your custom route
-      if(request.url?.split('/')[1] === 'custom-route') {
-
+      if (request.url?.split("/")[1] === "custom-route") {
         // Respond with your custum content
-        response.writeHead(200, { 'Content-Type': 'text/plain' })
-        response.end('This is my custom response, yay!')
+        response.writeHead(200, { "Content-Type": "text/plain" });
+        response.end("This is my custom response, yay!");
 
         // Rejecting the promise will stop the chain and no further
         // onRequest hooks are run
-        return reject()
+        return reject();
       }
 
-      resolve()
-    })
+      resolve();
+    });
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
 
 ### onStoreDocument
@@ -661,9 +663,9 @@ with the hook directly, just make sure to apply / encode the states of the yDoc 
 The `data` passed to the `onStoreDocument` hook has the following attributes:
 
 ```js
-import { IncomingHttpHeaders } from 'http'
-import { URLSearchParams } from 'url'
-import { Doc } from 'yjs'
+import { IncomingHttpHeaders } from "http";
+import { URLSearchParams } from "url";
+import { Doc } from "yjs";
 
 const data = {
   clientsCount: number,
@@ -675,7 +677,7 @@ const data = {
   requestParameters: URLSearchParams,
   update: Uint8Array,
   socketId: string,
-}
+};
 ```
 
 ### onUpgrade
@@ -689,55 +691,54 @@ This is useful if you want to create custom websocket routes on the same port Ho
 The `data` passed to the `onUpgrade` hook has the following attributes:
 
 ```js
-import { IncomingMessage } from 'http'
-import { Socket } from 'net'
+import { IncomingMessage } from "http";
+import { Socket } from "net";
 
 const data = {
   head: any,
   request: IncomingMessage,
   socket: Socket,
   instance: Hocuspocus,
-}
+};
 ```
 
 **Example**
 
 ```js
-import { Server } from '@hocuspocus/server'
-import WebSocket, { WebSocketServer } from 'ws'
+import { Server } from "@hocuspocus/server";
+import WebSocket, { WebSocketServer } from "ws";
 
 const server = Server.configure({
   onUpgrade(data) {
     return new Promise((resolve, reject) => {
-      const { request, socket, head } = data
+      const { request, socket, head } = data;
 
       // Check if the request hits your custom route
-      if(request.url?.split('/')[1] === 'custom-route') {
-
+      if (request.url?.split("/")[1] === "custom-route") {
         // Create your own websocket server to upgrade the request, make
         // sure noServer is set to true, because we're handling the upgrade
         // ourselves
-        const websocketServer = new WebSocketServer({ noServer: true })
-        websocketServer.on('connection', (connection: WebSocket, request: IncomingMessage) => {
+        const websocketServer = new WebSocketServer({ noServer: true });
+        websocketServer.on("connection", (connection: WebSocket, request: IncomingMessage) => {
           // Put your application logic here to respond to new connections
           // and subscribe to incoming messages
-          console.log('A new connection to our websocket server!')
-        })
+          console.log("A new connection to our websocket server!");
+        });
 
         // Handle the upgrade request within your own websocket server
-        websocketServer.handleUpgrade(request, socket, head, ws => {
-          websocketServer.emit('connection', ws, request)
-        })
+        websocketServer.handleUpgrade(request, socket, head, (ws) => {
+          websocketServer.emit("connection", ws, request);
+        });
 
         // Rejecting the promise will stop the chain and no further
         // onUpgrade hooks are run
-        return reject()
+        return reject();
       }
 
-      resolve()
-    })
+      resolve();
+    });
   },
-})
+});
 
-server.listen()
+server.listen();
 ```
