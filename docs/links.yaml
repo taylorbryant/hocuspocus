@@ -12,14 +12,10 @@
 
 - title: Guides
   items:
-    - title: Configuration
-      link: /guide/configuration
     - title: Authorization
       link: /guide/authentication-and-authorization
     - title: Documents
       link: /guide/documents
-    - title: Hooks
-      link: /guide/hooks
     - title: Working with JSON
       link: /guide/transformations
     - title: Subdocuments
@@ -39,36 +35,7 @@
     - title: Methods
       link: /api/methods
     - title: Hooks
-      link: /api/hooks
-      items:
-        - title: onConfigure
-          link: /api/hooks/on-configure
-        - title: onListen
-          link: /api/hooks/on-listen
-        - title: onUpgrade
-          link: /api/hooks/on-upgrade
-        - title: onConnect
-          link: /api/hooks/on-connect
-        - title: connected
-          link: /api/hooks/connected
-        - title: onAuthenticate
-          link: /api/hooks/on-authenticate
-        - title: onLoadDocument
-          link: /api/hooks/on-load-document
-        - title: onChange
-          link: /api/hooks/on-change
-        - title: beforeHandleMessage
-          link: /api/hooks/before-handle-message
-        - title: onStoreDocument
-          link: /api/hooks/on-store-document
-        - title: onAwarenessUpdate
-          link: /api/hooks/on-awareness-update
-        - title: onRequest
-          link: /api/hooks/on-request
-        - title: onDisconnect
-          link: /api/hooks/on-disconnect
-        - title: onDestroy
-          link: /api/hooks/on-destroy
+      link: /server/hooks
     - title: Examples
       link: /server/examples
 
