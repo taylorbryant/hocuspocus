@@ -40,14 +40,12 @@
       link: /guides/auth
     - title: Persistence
       link: /guides/persistence
-    - title: Working with JSON
-      link: /guides/transformations
     - title: Multi/Sub-documents
       link: /guides/multi-subdocuments
       type: draft
-    - title: Custom extensions
-      link: /guides/custom-extensions
-    - title: Awareness
-      link: /guidess/awareness
     - title: Scalability
       link: /guides/scalability
+    - title: Awareness
+      link: /guidess/awareness
+    - title: Custom Extensions
+      link: /guides/custom-extensions
