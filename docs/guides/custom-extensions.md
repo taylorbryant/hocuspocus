@@ -2,11 +2,7 @@
 tableOfContents: true
 ---
 
-# Extensions
-
-## Introduction
-
-Extensions are a quick way to add additional features to Hocuspocus. They use the same API and the same hooks you saw in the previous chapters.
+# Custom Extensions
 
 ## Official extensions
 

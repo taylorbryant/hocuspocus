@@ -49,3 +49,32 @@ new HocuspocusProvider({
   token: 'super-secret-token',
 })
 ```
+
+## Read only mode
+
+If you want to restrict the current user only to read the document and it's updates but not apply
+updates him- or herself, you can use the `connection` property in the `onAuthenticate` hooks payload:
+
+```js
+import { Server } from '@hocuspocus/server'
+
+const usersWithWriteAccess = [
+  'jane', 'john', 'christina',
+]
+
+const server = Server.configure({
+  async onAuthenticate(data): Doc {
+
+    // Example code to check if the current user has write access by a
+    // request parameter. In a real world application you would probably
+    // get the user by a token from your database
+    if(!usersWithWriteAccess.includes(data.requestParameters.get('user'))) {
+      // Set the connection to readonly
+      data.connection.readOnly = true
+    }
+
+  },
+})
+
+server.listen()
+```

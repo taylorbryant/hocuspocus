@@ -10,36 +10,18 @@
     - title: Contributing
       link: /overview/contributing
 
-- title: Guides
-  items:
-    - title: Authorization
-      link: /guide/authentication-and-authorization
-    - title: Documents
-      link: /guide/documents
-    - title: Working with JSON
-      link: /guide/transformations
-    - title: Subdocuments
-      link: /guide/subdocuments
-      type: draft
-    - title: Custom extensions
-      link: /guide/extensions
-    - title: Awareness
-      link: /guides/awareness
-    - title: Scalability
-      link: /guide/scalability
-
 - title: Server
   items:
     - title: Configuration
-      link: /api/configuration
+      link: /server/configuration
     - title: Methods
-      link: /api/methods
+      link: /server/methods
     - title: Hooks
       link: /server/hooks
-    - title: Examples
-      link: /server/examples
     - title: Extensions
       link: /server/extensions
+    - title: Examples
+      link: /server/examples
 
 - title: Provider
   items:
@@ -52,11 +34,20 @@
     - title: Examples
       link: /provider/examples
 
-# - title: Knowledge
-#   items:
-#     - title: What’s a CRDT?
-#       link: /knowledge/crdt
-#       type: draft
-#     - title: How does Y.js work?
-#       link: /knowledge/yjs
-#       type: draft
+- title: Guides
+  items:
+    - title: Auth
+      link: /guides/auth
+    - title: Persistence
+      link: /guides/persistence
+    - title: Working with JSON
+      link: /guides/transformations
+    - title: Multi/Sub-documents
+      link: /guides/multi-subdocuments
+      type: draft
+    - title: Custom extensions
+      link: /guides/custom-extensions
+    - title: Awareness
+      link: /guidess/awareness
+    - title: Scalability
+      link: /guides/scalability
