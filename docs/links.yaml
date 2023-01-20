@@ -12,8 +12,6 @@
 
 - title: Use cases
   items:
-    - title: Awareness
-      link: /examples/awareness
     # - title: Tasks
     #   link: /examples/tasks
     #   type: draft
@@ -29,7 +27,7 @@
       link: /examples/slate
       type: draft
 
-- title: Guide
+- title: Guides
   items:
     - title: Configuration
       link: /guide/configuration
@@ -46,6 +44,8 @@
       type: draft
     - title: Custom extensions
       link: /guide/extensions
+    - title: Awareness
+      link: /guides/awareness
     - title: Scalability
       link: /guide/scalability
 
@@ -117,8 +117,6 @@
       link: /provider/configuration
     - title: Events
       link: /provider/events
-    - title: Awareness
-      link: /provider/awareness
 
 # - title: Knowledge
 #   items:
