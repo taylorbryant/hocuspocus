@@ -7,7 +7,7 @@ tableOfContents: true
 | --- | --- |
 | listen(portOrCallback, callback) | Start the server. |
 | configure(configuration) | Pass custom settings. |
-| handleConnection(incoming,request, documentName, context) | Bind the server to an existing server instance. |
+| handleConnection(incoming, request, documentName, context) | Bind the server to an existing server instance. |
 | getDocumentsCount() | Get the total number of active documents |
 | getConnectionsCount() | Get the total number of active connections |
 | closeConnections(documentName?) | Close all connections, or to a specific document. |

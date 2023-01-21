@@ -8,6 +8,8 @@ tableOfContents: true
 
 Through the awareness information about all present users can be shared. It allows you to sync the names, cursor positions, or even coordinates in a complex 3D world, whatever is needed. Under the hood it’s an own CRDT, but doesn’t have history of updates. You can read more about it in the [Yjs documentation on awareness](https://docs.yjs.dev/getting-started/adding-awareness).
 
+You can also see in [our events section of the provider](/provider/events) about the related events: `awarenessUpdate` and `awarenessChange`.
+
 ## Set your state
 
 Pass a key and a value to set information for the current users, you are free to pass whatever data you would like to share with other users. Here is an example with a name and a hex color under the `user` key:

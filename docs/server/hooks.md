@@ -6,9 +6,9 @@ tableOfContents: true
 
 ## Introduction
 
-Hocuspocus offers hooks to extend it's functionality and integrate it into existing applications. Hooks are configured as simple methods the same way as [other configuration options](/guide/configuration) are.
+Hocuspocus offers hooks to extend it's functionality and integrate it into existing applications. Hooks are configured as simple methods the same way as [other configuration options](/guides/configuration) are.
 
-Hooks accept a hook payload as first argument. The payload is an object that contains data you can use and manipulate, allowing you to built complex things on top of this simple mechanic.
+Hooks accept a hook payload as first argument. The payload is an object that contains data you can use and manipulate, allowing you to built complex things on top of this simple mechanic, like [extensions](/guides/custom-extension).
 
 Hooks are required to return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), the easiest way to do that is to mark the function as `async` (Node.js version must 14+). In this way, you can do things like executing API requests, running DB queries, trigger webhooks or whatever you need to do to integrate it into your application.
 
@@ -38,7 +38,7 @@ By way of illustration, if a user isn’t allowed to connect: Just send `reject(
 | `onLoadDocument`      | When a new document is created            | [Read more](/api/hooks/on-load-document)      |
 | `onChange`            | When a document has changed               | [Read more](/api/hooks/on-change)             |
 | `onDisconnect`        | When a connection was closed              | [Read more](/api/hooks/on-disconnect)         |
-| `onListen`            | When the serer is intialized              | [Read more](/api/hooks/on-listen)             |
+| `onListen`            | When the server is intialized              | [Read more](/api/hooks/on-listen)             |
 | `onDestroy`           | When the server will be destroyed         | [Read more](/api/hooks/on-destroy)            |
 | `onConfigure`         | When the server has been configured       | [Read more](/api/hooks/on-configure)          |
 | `onRequest`           | When a HTTP request comes in              | [Read more](/api/hooks/on-request)            |

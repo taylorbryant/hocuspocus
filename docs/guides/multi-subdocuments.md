@@ -60,3 +60,55 @@ const bodyEditor = new Editor({
   ]
 });
 ```
+When using multiple fields you can simply merge different documents into the given document:
+		
+```ts
+import {readFileSync} from 'fs'
+import {Server} from '@hocuspocus/server'
+import {TiptapTransformer} from '@hocuspocus/transformer'
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+const generateSampleProsemirrorJson = (text: string) => {
+  return {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text,
+          },
+        ],
+      },
+    ],
+  }
+}
+const server = Server.configure({
+  async onLoadDocument(data) {
+    // only import things if they are not already set in the primary storage
+    if (data.document.isEmpty('default')) {
+      // Get a Y-Doc for the 'default' field …
+      const defaultField = TiptapTransformer.toYdoc(
+        generateSampleProsemirrorJson('What is love?'),
+        'default'
+          [Document, Paragraph, Text],
+      )
+      // … and merge it into the given document
+      data.document.merge(defaultField)
+    }
+    if (data.document.isEmpty('secondary')) {
+      // Get a Y-Doc for the 'secondary' field …
+      const secondaryField = TiptapTransformer.toYdoc(
+        generateSampleProsemirrorJson('Baby don\'t hurt me…'),
+        'secondary'
+          [Document, Paragraph, Text],
+      )
+      // … and merge it into the given document
+      data.document.merge(secondaryField)
+    }
+  },
+})
+server.listen()
+```
