@@ -45,7 +45,7 @@ Expects an async function (or Promise) which persists the Y.js binary data somew
 
 ### Usage
 
-The following example uses SQLite to store and retrieve data. You can replace that part with whatever data store you have. As long as you return a Promise you can store data with PostgreSQL, MySQL, MongoDB, S3 … If you actually want to use SQLite, you can have a look at the [SQLite extension](/api/extensions/sqlite).
+The following example uses SQLite to store and retrieve data. You can replace that part with whatever data store you have. As long as you return a Promise you can store data with PostgreSQL, MySQL, MongoDB, S3 … If you actually want to use SQLite, you can have a look at the [SQLite extension](/server/extensions#Sqlite).
 
 ```js
 import { Server } from "@hocuspocus/server";
@@ -576,7 +576,7 @@ When a new document is created the onCreate webhook will be triggered with the f
 }
 ```
 
-You can use this to import a document into Hocuspocus. The webhook extension will first load the document from the [primary storage](/guide/documents#using-a-primary-storage) and only import it if it doesn't already exist in there.
+You can use this to import a document into Hocuspocus. The webhook extension will first load the document from the primary storage and only import it if it doesn't already exist in there.
 
 Just respond with all the single documents keyed by their field name. For example:
 

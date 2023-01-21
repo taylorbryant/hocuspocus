@@ -6,7 +6,7 @@ tableOfContents: true
 
 ## Introduction
 
-Hocuspocus offers hooks to extend it's functionality and integrate it into existing applications. Hooks are configured as simple methods the same way as [other configuration options](/guides/configuration) are.
+Hocuspocus offers hooks to extend it's functionality and integrate it into existing applications. Hooks are configured as simple methods the same way as [other configuration options](/server/configuration) are.
 
 Hooks accept a hook payload as first argument. The payload is an object that contains data you can use and manipulate, allowing you to built complex things on top of this simple mechanic, like [extensions](/guides/custom-extension).
 
@@ -30,20 +30,20 @@ By way of illustration, if a user isn’t allowed to connect: Just send `reject(
 
 | Hook                  | Description                               | Link                                          |
 | --------------------- | ----------------------------------------- | --------------------------------------------- |
-| `beforeHandleMessage` | Before handling a message                 | [Read more](/api/hooks/before-handle-message) |
-| `onConnect`           | When a connection is established          | [Read more](/api/hooks/on-connect)            |
-| `connected`           | After a connection has been establied     | [Read more](/api/hooks/connected)             |
-| `onAuthenticate`      | When authentication is passed             | [Read more](/api/hooks/on-authenticate)       |
-| `onAwarenessUpdate`   | When awareness changed                    | [Read more](/api/hooks/on-awareness-update)   |
-| `onLoadDocument`      | When a new document is created            | [Read more](/api/hooks/on-load-document)      |
-| `onChange`            | When a document has changed               | [Read more](/api/hooks/on-change)             |
-| `onDisconnect`        | When a connection was closed              | [Read more](/api/hooks/on-disconnect)         |
-| `onListen`            | When the server is intialized              | [Read more](/api/hooks/on-listen)             |
-| `onDestroy`           | When the server will be destroyed         | [Read more](/api/hooks/on-destroy)            |
-| `onConfigure`         | When the server has been configured       | [Read more](/api/hooks/on-configure)          |
-| `onRequest`           | When a HTTP request comes in              | [Read more](/api/hooks/on-request)            |
-| `onStoreDocument`     | When a document has been changed          | [Read more](/api/hooks/on-store-document)     |
-| `onUpgrade`           | When the WebSocket connection is upgraded | [Read more](/api/hooks/on-upgrade)            |
+| `beforeHandleMessage` | Before handling a message                 | [Read more](/server/hooks#before-handle-message) |
+| `onConnect`           | When a connection is established          | [Read more](/server/hooks#on-connect)            |
+| `connected`           | After a connection has been establied     | [Read more](/server/hooks#connected)             |
+| `onAuthenticate`      | When authentication is passed             | [Read more](/server/hooks#on-authenticate)       |
+| `onAwarenessUpdate`   | When awareness changed                    | [Read more](/server/hooks#on-awareness-update)   |
+| `onLoadDocument`      | When a new document is created            | [Read more](/server/hooks#on-load-document)      |
+| `onChange`            | When a document has changed               | [Read more](/server/hooks#on-change)             |
+| `onDisconnect`        | When a connection was closed              | [Read more](/server/hooks#on-disconnect)         |
+| `onListen`            | When the server is intialized              | [Read more](/server/hooks#on-listen)             |
+| `onDestroy`           | When the server will be destroyed         | [Read more](/server/hooks#on-destroy)            |
+| `onConfigure`         | When the server has been configured       | [Read more](/server/hooks#on-configure)          |
+| `onRequest`           | When a HTTP request comes in              | [Read more](/server/hooks#on-request)            |
+| `onStoreDocument`     | When a document has been changed          | [Read more](/server/hooks#on-store-document)     |
+| `onUpgrade`           | When the WebSocket connection is upgraded | [Read more](/server/hooks#on-upgrade)            |
 
 ## Usage
 
@@ -227,7 +227,7 @@ const server = Server.configure({
 
 ### onAwarenessUpdate
 
-The `onAwarenessUpdate` hook is called when awareness changed ([Provider Awareness API](/provider/awareness)).
+The `onAwarenessUpdate` hook is called when awareness changed ([Provider Awareness API](/provider/events)).
 
 **Hook payload**
 
@@ -306,8 +306,7 @@ Context contains the data provided in former `onConnect` hooks.
 **Example**
 
 :::warning Use a primary storage
-The following example is not intended to be your primary storage as serializing to and deserializing from JSON will not store collaboration history steps but only the resulting document. This example is only meant to store the resulting document for the views of your application. For a primary storage, check out the [Database extension](/api/extensions/database).
-:::
+The following example is not intended to be your primary storage as serializing to and deserializing from JSON will not store collaboration history steps but only the resulting document. This example is only meant to store the resulting document for the views of your application. For a primary storage, check out the [Database extension](/server/extensions#Database).
 
 ```js
 import { debounce } from "debounce";
@@ -347,7 +346,7 @@ server.listen();
 
 ### onConfigure
 
-The `onConfigure` hook is called after the server was configured using the [configure](/api/methods) method. It should return a Promise.
+The `onConfigure` hook is called after the server was configured using the [configure method](/server/methods). It should return a Promise.
 
 **Default configuration**
 
@@ -429,7 +428,7 @@ server.listen();
 
 ### onDestroy
 
-The `onDestroy` hook is called after the server was shut down using the [destroy](/api/methods) method. It should return a Promise.
+The `onDestroy` hook is called after the server was shut down using the [destroy](/server/methods) method. It should return a Promise.
 
 **Hook payload**
 
@@ -577,7 +576,7 @@ server.listen()
 
 There are multiple ways to store your Y.js documents (and the history) wherever you like. Basically, you’d like to use the `onStoreDocument` hook, which is debounced and executed every few seconds for changed documents. It gives you the current Y.js document and it’s up to you to store that somewhere. No worries, we provide some convient ways for you.
 
-If you just want to to get it working, have a look at the [`SQLite`](/api/extensions/sqlite) extension for local development, and the generic [`Database`](/api/extensions/database) extension for a convenient way to fetch and store documents.
+If you just want to to get it working, have a look at the [`SQLite`](/server/extensions#Sqlite) extension for local development, and the generic [`Database`](/server/extensions#Database) extension for a convenient way to fetch and store documents.
 
 **Hook payload**
 

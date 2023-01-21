@@ -5,7 +5,7 @@ tableOfContents: true
 # Configuration
 
 ## Introduction
-There are only a few settings to pass for now. Most things are controlled through [hooks](/api/hooks).
+There are only a few settings to pass for now. Most things are controlled through [hooks](/server/hooks).
 
 ## Settings
 | Setting | Description | Default value |
