@@ -28,8 +28,8 @@ By way of illustration, if a user isn’t allowed to connect: Just send `reject(
 
 ## Summary Table
 
-| Hook                  | Description                               | Link                                          |
-| --------------------- | ----------------------------------------- | --------------------------------------------- |
+| Hook                  | Description                               | Link                                             |
+| --------------------- | ----------------------------------------- | ------------------------------------------------ |
 | `beforeHandleMessage` | Before handling a message                 | [Read more](/server/hooks#before-handle-message) |
 | `onConnect`           | When a connection is established          | [Read more](/server/hooks#on-connect)            |
 | `connected`           | After a connection has been establied     | [Read more](/server/hooks#connected)             |
@@ -38,7 +38,7 @@ By way of illustration, if a user isn’t allowed to connect: Just send `reject(
 | `onLoadDocument`      | When a new document is created            | [Read more](/server/hooks#on-load-document)      |
 | `onChange`            | When a document has changed               | [Read more](/server/hooks#on-change)             |
 | `onDisconnect`        | When a connection was closed              | [Read more](/server/hooks#on-disconnect)         |
-| `onListen`            | When the server is intialized              | [Read more](/server/hooks#on-listen)             |
+| `onListen`            | When the server is intialized             | [Read more](/server/hooks#on-listen)             |
 | `onDestroy`           | When the server will be destroyed         | [Read more](/server/hooks#on-destroy)            |
 | `onConfigure`         | When the server has been configured       | [Read more](/server/hooks#on-configure)          |
 | `onRequest`           | When a HTTP request comes in              | [Read more](/server/hooks#on-request)            |

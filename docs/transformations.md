@@ -21,7 +21,7 @@ npm install @hocuspocus/transformer
 … and import them:
 
 ```js
-import { TiptapTransformer, ProsemirrorTransformer } from '@hocuspocus/transformer'
+import { TiptapTransformer, ProsemirrorTransformer } from "@hocuspocus/transformer";
 ```
 
 ## Examples
@@ -31,37 +31,37 @@ import { TiptapTransformer, ProsemirrorTransformer } from '@hocuspocus/transform
 **Convert a Y-Doc to prosemirror JSON:**
 
 ```js
-import { TiptapTransformer } from '@hocuspocus/transformer'
-import { Doc } from 'yjs'
+import { TiptapTransformer } from "@hocuspocus/transformer";
+import { Doc } from "yjs";
 
-const ydoc = new Doc()
-const prosemirrorJSON = TiptapTransformer.fromYdoc(ydoc, 'field-name')
+const ydoc = new Doc();
+const prosemirrorJSON = TiptapTransformer.fromYdoc(ydoc, "field-name");
 ```
 
 **Convert prosemirror JSON to a Y-Doc:**
 
 ```js
-import { TiptapTransformer } from '@hocuspocus/transformer'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
+import { TiptapTransformer } from "@hocuspocus/transformer";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
 
 const prosemirrorJSON = {
-  type: 'doc',
+  type: "doc",
   content: [
     // ...
   ],
-}
+};
 
 // The TiptapTransformer requires you to pass the list of  extensions you use in
 // the frontend to create a valid document
-const ydoc = TiptapTransformer.toYdoc(prosemirrorJSON, 'field-name', [ Document, Paragraph, Text ])
+const ydoc = TiptapTransformer.toYdoc(prosemirrorJSON, "field-name", [Document, Paragraph, Text]);
 
 // Alternatively you can set the extensions on the Transformer instance directly
 // and reuse them
-const transformer = TiptapTransformer.extensions([ Document, Paragraph, Text ])
-const ydoc2 = transformer.toYdoc(prosemirrorJSON, 'field-name')
-const ydoc3 = transformer.toYdoc(prosemirrorJSON, 'field-name')
+const transformer = TiptapTransformer.extensions([Document, Paragraph, Text]);
+const ydoc2 = transformer.toYdoc(prosemirrorJSON, "field-name");
+const ydoc3 = transformer.toYdoc(prosemirrorJSON, "field-name");
 ```
 
 ### Prosemirror
@@ -69,38 +69,37 @@ const ydoc3 = transformer.toYdoc(prosemirrorJSON, 'field-name')
 **Convert a Y-Doc to prosemirror JSON:**
 
 ```js
-import { ProsemirrorTransformer } from '@hocuspocus/transformer'
-import { Doc } from 'yjs'
+import { ProsemirrorTransformer } from "@hocuspocus/transformer";
+import { Doc } from "yjs";
 
-const ydoc = new Doc()
-const prosemirrorJSON = ProsemirrorTransformer.fromYdoc(ydoc, 'field-name')
+const ydoc = new Doc();
+const prosemirrorJSON = ProsemirrorTransformer.fromYdoc(ydoc, "field-name");
 ```
 
 **Convert prosemirror JSON to a Y-Doc:**
 
 ```js
-import { ProsemirrorTransformer } from '@hocuspocus/transformer'
-import { Schema } from 'prosemirror-model'
+import { ProsemirrorTransformer } from "@hocuspocus/transformer";
+import { Schema } from "prosemirror-model";
 
 const prosemirrorJSON = {
-  type: 'doc',
+  type: "doc",
   content: [
     // ...
   ],
-}
+};
 
-const prosemirrorSchema = new Schema()
+const prosemirrorSchema = new Schema();
 
 // The ProsemirrorTransformer requires you to pass the schema your editor uses
-const ydoc = ProsemirrorTransformer.toYdoc(prosemirrorJSON, 'field-name', prosemirrorSchema)
+const ydoc = ProsemirrorTransformer.toYdoc(prosemirrorJSON, "field-name", prosemirrorSchema);
 
 // Alternatively you can set the schema on the Transformer instance directly
 // and reuse it
-const transformer = ProsemirrorTransformer.schema(prosemirrorSchema)
-const ydoc2 = transformer.toYdoc(prosemirrorJSON, 'field-name')
-const ydoc3 = transformer.toYdoc(prosemirrorJSON, 'field-name')
+const transformer = ProsemirrorTransformer.schema(prosemirrorSchema);
+const ydoc2 = transformer.toYdoc(prosemirrorJSON, "field-name");
+const ydoc3 = transformer.toYdoc(prosemirrorJSON, "field-name");
 ```
-
 
 ### Quill
 

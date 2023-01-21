@@ -15,16 +15,16 @@ In a real-world app you would probably use the name of your entity and a unique 
 could look like for a CMS:
 
 ```js
-const documentName = 'page.140'
+const documentName = "page.140";
 ```
 
 Now you can easily split this to get all desired information separately:
 
 ```js
-const [entityType, entityID] = documentName.split('.')
+const [entityType, entityID] = documentName.split(".");
 
-console.log(entityType) // prints "page"
-console.log(entityID) // prints "140
+console.log(entityType); // prints "page"
+console.log(entityID); // prints "140
 ```
 
 This is a recommendation, of course you can name your documents however you want!
@@ -46,69 +46,68 @@ const titleEditor = new Editor({
   extensions: [
     Collaboration.configure({
       document: this.ydoc,
-      field: 'title',
+      field: "title",
     }),
-  ]
+  ],
 });
 
 const bodyEditor = new Editor({
   extensions: [
     Collaboration.configure({
       document: this.ydoc,
-      field: 'body',
+      field: "body",
     }),
-  ]
+  ],
 });
 ```
+
 When using multiple fields you can simply merge different documents into the given document:
-		
+
 ```ts
-import {readFileSync} from 'fs'
-import {Server} from '@hocuspocus/server'
-import {TiptapTransformer} from '@hocuspocus/transformer'
-import Document from '@tiptap/extension-document'
-import Paragraph from '@tiptap/extension-paragraph'
-import Text from '@tiptap/extension-text'
+import { readFileSync } from "fs";
+import { Server } from "@hocuspocus/server";
+import { TiptapTransformer } from "@hocuspocus/transformer";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
 const generateSampleProsemirrorJson = (text: string) => {
   return {
-    type: 'doc',
+    type: "doc",
     content: [
       {
-        type: 'paragraph',
+        type: "paragraph",
         content: [
           {
-            type: 'text',
+            type: "text",
             text,
           },
         ],
       },
     ],
-  }
-}
+  };
+};
 const server = Server.configure({
   async onLoadDocument(data) {
     // only import things if they are not already set in the primary storage
-    if (data.document.isEmpty('default')) {
+    if (data.document.isEmpty("default")) {
       // Get a Y-Doc for the 'default' field …
       const defaultField = TiptapTransformer.toYdoc(
-        generateSampleProsemirrorJson('What is love?'),
-        'default'
-          [Document, Paragraph, Text],
-      )
+        generateSampleProsemirrorJson("What is love?"),
+        "default"[(Document, Paragraph, Text)]
+      );
       // … and merge it into the given document
-      data.document.merge(defaultField)
+      data.document.merge(defaultField);
     }
-    if (data.document.isEmpty('secondary')) {
+    if (data.document.isEmpty("secondary")) {
       // Get a Y-Doc for the 'secondary' field …
       const secondaryField = TiptapTransformer.toYdoc(
-        generateSampleProsemirrorJson('Baby don\'t hurt me…'),
-        'secondary'
-          [Document, Paragraph, Text],
-      )
+        generateSampleProsemirrorJson("Baby don't hurt me…"),
+        "secondary"[(Document, Paragraph, Text)]
+      );
       // … and merge it into the given document
-      data.document.merge(secondaryField)
+      data.document.merge(secondaryField);
     }
   },
-})
-server.listen()
+});
+server.listen();
 ```

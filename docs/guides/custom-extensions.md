@@ -24,10 +24,9 @@ import {
   onAuthenticatePayload,
   onLoadDocumentPayload,
   onDisconnectPayload,
-} from '@hocuspocus/server'
+} from "@hocuspocus/server";
 
 export class MyHocuspocusExtension implements Extension {
-
   async onLoadDocument(data: onLoadDocumentPayload): Promise<void> {}
 
   async onChange(data: onChangePayload): Promise<void> {}
@@ -47,7 +46,6 @@ export class MyHocuspocusExtension implements Extension {
   async onDestroy(data: onDestroyPayload): Promise<void> {}
 
   async onConfigure(data: onConfigurePayload): Promise<void> {}
-
 }
 ```
 
@@ -65,22 +63,21 @@ import {
   onAuthenticatePayload,
   onLoadDocumentPayload,
   onDisconnectPayload,
-} from '@hocuspocus/server'
+} from "@hocuspocus/server";
 
 export interface Configuration {
-  myConfigurationOption: string,
-  myOptionalConfigurationOption: number | undefined,
+  myConfigurationOption: string;
+  myOptionalConfigurationOption: number | undefined;
 }
 
 export class MyHocuspocusExtension implements Extension {
-
   configuration: Configuration = {
-    myConfigurationOption: 'foobar',
+    myConfigurationOption: "foobar",
     myOptionalConfigurationOption: 42,
-  }
+  };
 
-  constructor(configuration ?: Partial<Configuration>) {
-    this.configuration = { ...this.configuration, ...configuration }
+  constructor(configuration?: Partial<Configuration>) {
+    this.configuration = { ...this.configuration, ...configuration };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -112,24 +109,23 @@ export class MyHocuspocusExtension implements Extension {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   async onConfigure(data: onConfigurePayload): Promise<void> {}
-
 }
 ```
 
 That's it. The only thing missing now is your code. Happy extension writing! When you're done you can simply import and register your extension like any other:
 
 ```js
-import { Server } from '@hocuspocus/server'
-import { MyHocuspocusExtension } from './extensions/my-hocuspocus-extension'
+import { Server } from "@hocuspocus/server";
+import { MyHocuspocusExtension } from "./extensions/my-hocuspocus-extension";
 
 const server = Server.configure({
   extensions: [
     new MyHocuspocusExtension({
-      myConfigurationOption: 'baz',
+      myConfigurationOption: "baz",
       myOptionalConfigurationOption: 1337,
-    })
+    }),
   ],
-})
+});
 
-server.listen()
+server.listen();
 ```

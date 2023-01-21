@@ -32,11 +32,11 @@ users.
 
 ## Features
 
-* Merges changes without conflicts
-* Doesn’t care when changes come in
-* Can sync your whole application state
-* Collaborative text editing (with Tiptap, Slate, Quill, Monaco or ProseMirror)
-* Integrates into existing applications
-* Sends changes to Webhooks
-* Scales to millions of users with Redis
-* Written in TypeScript
+- Merges changes without conflicts
+- Doesn’t care when changes come in
+- Can sync your whole application state
+- Collaborative text editing (with Tiptap, Slate, Quill, Monaco or ProseMirror)
+- Integrates into existing applications
+- Sends changes to Webhooks
+- Scales to millions of users with Redis
+- Written in TypeScript

@@ -50,7 +50,7 @@ function createInitialDocTemplate() {
   // do anything you want here
 }
 ```
+
 ## FAQ: In what format should I save my document?
 
-In Uint8Array, [which is the format that Yjs encodes its documents](https://docs.yjs.dev/api/document-updates
-). You can persist your documents **ALSO** in another format like JSON if for some reason you want to. Other formats can give you the current state of the document, but you need your Y.Doc if you want the historical steps of the document, which is very much what RTC is all about!
+In Uint8Array, [which is the format that Yjs encodes its documents](https://docs.yjs.dev/api/document-updates). You can persist your documents **ALSO** in another format like JSON if for some reason you want to. Other formats can give you the current state of the document, but you need your Y.Doc if you want the historical steps of the document, which is very much what RTC is all about!
