@@ -53,8 +53,6 @@ Notice something? These look like the hooks we introduced in the previous chapte
 
 Now you can add a constructor that accepts your extension's configuration and merges the default one. It's good practise at this point to create an interface for your configuration too.
 
-You need to keep all those methods, even if you don't use them. If you want to get rid of those annoying TypeScript warnings about empty functions, you can add the `@typescript-eslint/no-empty-function` annotation.
-
 ```js
 import {
   Extension,
