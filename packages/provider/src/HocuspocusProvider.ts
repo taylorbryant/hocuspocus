@@ -31,7 +31,6 @@ import {
   HocuspocusProviderWebsocket,
 } from './HocuspocusProviderWebsocket'
 import { StatelessMessage } from './OutgoingMessages/StatelessMessage'
-import { CloseMessage } from './OutgoingMessages/CloseMessage'
 import { onAwarenessChangeParameters, onAwarenessUpdateParameters } from '.'
 
 export type HocuspocusProviderConfiguration =
@@ -294,14 +293,18 @@ export class HocuspocusProvider extends EventEmitter {
     return !!this.configuration.token && !this.isAuthenticated
   }
 
-  // not needed, but provides backward compatibility with e.g. lexicla/yjs
+  // not needed, but provides backward compatibility with e.g. lexical/yjs
   async connect() {
-    return this.configuration.websocketProvider.connect()
+    const connectPromise = this.configuration.websocketProvider.connect()
+    this.isConnected = true
+
+    return connectPromise
   }
 
   disconnect() {
     this.disconnectBroadcastChannel()
     this.configuration.websocketProvider.detach(this)
+    this.isConnected = false
   }
 
   async onOpen(event: Event) {
@@ -389,14 +392,12 @@ export class HocuspocusProvider extends EventEmitter {
     removeAwarenessStates(this.awareness, [this.document.clientID], 'provider destroy')
 
     this.disconnect()
+    this.isConnected = false
 
     this.awareness.off('update', this.awarenessUpdateHandler)
     this.document.off('update', this.documentUpdateHandler)
 
     this.removeAllListeners()
-
-    this.send(CloseMessage, { documentName: this.configuration.name })
-    this.isConnected = false
 
     if (typeof window === 'undefined') {
       return

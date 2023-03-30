@@ -7,10 +7,12 @@ import {
   Forbidden, Unauthorized, WsReadyStates,
 } from '@hocuspocus/common'
 import { Event } from 'ws'
+import { toUint8Array } from 'lib0/encoding'
 import EventEmitter from './EventEmitter'
 import {
   onCloseParameters, onDisconnectParameters, onMessageParameters, onOpenParameters, onOutgoingMessageParameters, onStatusParameters, WebSocketStatus,
 } from './types'
+import { CloseMessage } from './OutgoingMessages/CloseMessage'
 import { HocuspocusProvider, onAwarenessChangeParameters, onAwarenessUpdateParameters } from '.'
 
 export type HocuspocusProviderWebsocketConfiguration =
@@ -217,8 +219,8 @@ export class HocuspocusProviderWebsocket extends EventEmitter {
   }
 
   detach(provider: HocuspocusProvider) {
-    // tell the server to remove the listener
-
+    const msg = new CloseMessage()
+    this.send(toUint8Array(msg.get({ documentName: provider.configuration.name })))
   }
 
   public setConfiguration(configuration: Partial<HocuspocusProviderWebsocketConfiguration> = {}): void {
